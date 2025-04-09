@@ -168,6 +168,22 @@ cython_debug/
 #.idea/
 
 # Ruff stuff:
+# Don't commit environment variables or secrets
+.env
+*.env
+
+# Don't commit your SQLite dev DB (not used in prod)
+*.db
+
+# Optional: ignore local static assets you don’t want in version control
+static/images/*
+static/fonts/*
+
+# Ignore logs, test caches
+*.log
+.cache/
+coverage/
+
 .ruff_cache/
 
 # PyPI configuration file
