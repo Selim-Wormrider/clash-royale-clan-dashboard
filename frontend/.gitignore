@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.db
+.env
+*.env
+
+# Virtualenv
+venv/
+env/
+
+# Logs
+*.log
+
+# Frontend build artifacts (if any)
+frontend/static/images/*
+frontend/static/fonts/*
