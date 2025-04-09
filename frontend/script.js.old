@@ -1,0 +1,21 @@
+async function fetchJSON(endpoint) {
+  const res = await fetch(endpoint);
+  return await res.json();
+}
+
+async function loadData() {
+  const race = await fetchJSON("/api/river-race");
+  const war = await fetchJSON("/api/current-riverrace");
+  const members = await fetchJSON("/api/clan-members");
+
+  document.getElementById("riverRaceData").innerText = JSON.stringify(race, null, 2);
+  document.getElementById("currentWarContainer").innerText = JSON.stringify(war, null, 2);
+  document.getElementById("memberContainer").innerText = JSON.stringify(members, null, 2);
+}
+
+function toggleMembers() {
+  const el = document.getElementById("memberContainer");
+  el.style.display = el.style.display === "none" ? "block" : "none";
+}
+
+window.onload = loadData;

@@ -1,25 +1,180 @@
+/* === Base Layout & Theme === */
 body {
-  font-family: sans-serif;
-  background-color: #f7f9fa;
   margin: 0;
   padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: url("/static/images/bg-tile.png") repeat;
+  background-size: 256px;
+  color: #fff;
+  overflow-x: hidden;
 }
 
 .container {
   max-width: 960px;
   margin: auto;
   padding: 2rem;
+  background-color: rgba(0, 63, 145, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  position: relative;
+  z-index: 2;
 }
 
+/* === Header === */
 header {
   text-align: center;
   margin-bottom: 2rem;
 }
 
+header h1 {
+  font-size: 3rem;
+  margin: 0;
+  color: #ffd700;
+  text-shadow: 2px 2px 4px #000;
+}
+
+header h2 {
+  font-size: 1.2rem;
+  color: #a0c4ff;
+  margin-top: 0.5rem;
+}
+
+/* === Collapsible Sections === */
 section {
-  background: white;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-color: #f2c94c rgba(255,255,255,0.05);
+  scrollbar-width: thin;
+}
+
+.collapsible-header {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.7rem;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.collapsible-content {
+  display: none;
+  margin-top: 0.8rem;
+}
+
+/* === Card Layout === */
+.card {
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 1rem;
+  margin: 0.5rem 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.card-title {
+  font-weight: bold;
+  color: #ffd700;
+  font-size: 1.1rem;
+}
+
+.card-value {
+  font-size: 0.9rem;
+  color: #a0c4ff;
+}
+
+.card-details {
+  font-size: 0.8rem;
+  color: #ccc;
+  margin-top: 0.3rem;
+  line-height: 1.4;
+}
+
+.fame-bar-container {
+  background: #444;
+  height: 10px;
+  border-radius: 5px;
+  margin-top: 4px;
+  overflow: hidden;
+}
+.fame-bar {
+  height: 100%;
+  background: linear-gradient(to right, #f2c94c, #f2994a);
+}
+
+/* === Role Badge === */
+.role-badge {
+  background: #ffd700;
+  color: #000;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: inline-block;
+}
+
+/* === Buttons === */
+button {
+  background: #f2c94c;
+  color: #000;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background: #f2994a;
+}
+
+/* === Floating Characters Layer === */
+.floating-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.floating-layer img {
+  position: absolute;
+  width: 40px;
+  opacity: 0.15;
+  animation-name: rainDown;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes rainDown {
+  0% {
+    top: -80px;
+    transform: translateY(0);
+  }
+  100% {
+    top: 110vh;
+    transform: translateY(40px);
+  }
+}
+
+/* === Scrollbar Customization === */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ffd700;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgba(255,255,255,0.05);
 }

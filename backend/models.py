@@ -15,3 +15,10 @@ class RiverRaceEntry(Base):
     excused = Column(Boolean, default=False)
     role = Column(String)
     date_collected = Column(DateTime, default=datetime.datetime.utcnow)
+
+
+from sqlalchemy import DateTime
+import datetime
+
+if not hasattr(RiverRaceEntry, 'last_updated'):
+    RiverRaceEntry.last_updated = Column(DateTime, default=datetime.datetime.utcnow)

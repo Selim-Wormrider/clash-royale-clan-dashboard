@@ -1,29 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bravo Six | Clan War Dashboard</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="/static/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/static/script.js" defer></script>
 </head>
 <body>
+  <!-- Floating Characters Layer -->
+  <div class="floating-layer" id="characterRain"></div>
+
+  <!-- Main Container -->
   <div class="container">
     <header>
       <h1>Bravo Six</h1>
       <h2>Clash Royale Clan War Dashboard</h2>
     </header>
 
+    <!-- River Race Summary -->
     <section>
-      <h3>River Race Stats</h3>
-      <div id="riverRaceData">Loading...</div>
+      <div class="collapsible-header" onclick="toggleSection('raceSummary')">
+        🏆 River Race Summary <span>🔽</span>
+      </div>
+      <div class="collapsible-content" id="raceSummary">
+        <div id="raceCompact"></div>
+        <div id="topParticipants"></div>
+        <div id="logsTimeline"></div>
+        <button onclick="triggerRefresh()">🔄 Refresh</button>
+        <div id="lastUpdated">Last updated: ...</div>
+      </div>
     </section>
 
+    <!-- Clan Member Stats -->
     <section>
-      <h3>Current War</h3>
-      <div id="currentWarContainer">Loading...</div>
+      <div class="collapsible-header" onclick="toggleSection('memberSection')">
+        👥 Clan Members <span>🔽</span>
+      </div>
+      <div class="collapsible-content" id="memberSection">
+        <div id="memberContainer">Loading members...</div>
+      </div>
     </section>
 
+    <!-- Charts & History -->
     <section>
-      <h3>Clan Members</h3>
-      <button onclick="toggleMembers()">Show/Hide</button>
-      <div id="memberContainer
+      <div class="collapsible-header" onclick="toggleSection('chartsSection')">
+        📊 Stats & Trends <span>🔽</span>
+      </div>
+      <div class="collapsible-content" id="chartsSection">
+        <canvas id="fameChart" width="400" height="200"></canvas>
+        <div id="historyTable"></div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

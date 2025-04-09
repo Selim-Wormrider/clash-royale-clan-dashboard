@@ -1,0 +1,106 @@
+from fastapi import APIRouter
+from fastapi.responses import JSONResponse
+from backend.database import SessionLocal
+from backend.models import RiverRaceEntry
+from backend.fetcher import fetch_data
+import asyncio
+from datetime import datetime
+
+router = APIRouter()
+
+
+@router.get("/api/clan-members")
+async def get_clan_members():
+    try:
+        data = await fetch_data("members")
+        return JSONResponse(content=data.get("items", []))
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
+
+@router.get("/api/current-riverrace")
+async def get_current_riverrace():
+    try:
+        data = await fetch_data("currentriverrace")
+        return JSONResponse(content=data)
+    except Exception as e:
+        return JSONResponse(content={"error": str(e)}, status_code=500)
+
+
+@router.get("/api/war-log")
+async def get_war_log():
+    try:
+        data = await fetch_data("warlog")
+        return JSONResponse(content=data)
+    except Exception as e:
+        return JSON
+
+
+import datetime
+import time
+from backend.database import SessionLocal
+from backend.models import RiverRaceEntry
+from backend.fetcher import fetch_data
+
+last_race_refresh = 0
+last_member_refresh = 0
+
+@router.get("/api/refresh-race")
+def refresh_race_data():
+    global last_race_refresh
+    if time.time() - last_race_refresh < 300:  # 5 min
+        return JSONResponse(content={"status": "cooldown"})
+    data = fetch_data_sync("currentriverrace")
+    if not data or "clan" not in data: return JSONResponse(content={"error": "no data"})
+    week = f"{datetime.datetime.utcnow().isocalendar()[0]}-W{datetime.datetime.utcnow().isocalendar()[1]}"
+    db = SessionLocal()
+    for p in data["clan"]["participants"]:
+        exists = db.query(RiverRaceEntry).filter_by(tag=p["tag"], week=week).first()
+        if not exists:
+            db.add(RiverRaceEntry(
+                week=week, tag=p["tag"], name=p["name"],
+                fame=p.get("fame", 0), decks_used=p.get("decksUsed", 0),
+                decks_possible=p.get("decksUsedToday", 4), role=p.get("role", "member")
+            ))
+    db.commit()
+    db.close()
+    last_race_refresh = time.time()
+    return {"status": "refreshed"}
+
+@router.get("/api/summary")
+def summary():
+    db = SessionLocal()
+    entries = db.query(RiverRaceEntry).all()
+    summary = {}
+    for e in entries:
+        key = e.tag
+        if key not in summary:
+            summary[key] = {
+                "tag": e.tag, "name": e.name, "role": e.role,
+                "weeks": [], "excused": 0, "total": 0, "used": 0
+            }
+        summary[key]["weeks"].append(e.week)
+        summary[key]["used"] += e.decks_used
+        summary[key]["total"] += e.decks_possible
+        if e.excused: summary[key]["excused"] += 1
+    result = []
+    for s in summary.values():
+        pct = (s["used"] / s["total"]) * 100 if s["total"] else 0
+        if s["role"] in ["coLeader", "leader"]:
+            flag = "exempt"
+        elif s["role"] == "elder" and pct < 70:
+            flag = "demote"
+        elif s["role"] == "member" and pct < 85:
+            flag = "demote"
+        elif s["role"] == "member" and pct >= 100 and len(s["weeks"]) >= 4:
+            flag = "promote"
+        else:
+            flag = "ok"
+        s["status"] = flag
+        s["percent"] = round(pct, 1)
+        result.append(s)
+    return result
+
+def fetch_data_sync(endpoint):
+    import asyncio
+    return asyncio.run(fetch_data(endpoint))
