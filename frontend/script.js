@@ -1,3 +1,18 @@
+// 🔐 UUID v4 Polyfill (browser-safe)
+function generateUUID() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  );
+}
+
+// 🔐 generateUUID() Polyfill
+if (typeof crypto.randomUUID !== "function") {
+  crypto.randomUUID = () => (
+    ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+    )
+  );
+}
 async function fetchJSON(endpoint) {
   const res = await fetch(endpoint);
   return await res.json();
@@ -47,7 +62,7 @@ async function loadMembers() {
     el.className = "card";
 
     const lastSeen = member.lastSeen
-      ? new Date(member.lastSeen).toLocaleString("en-US", {
+      ? new Date(Date.parse(member.lastSeen)).toLocaleString("en-US", {
           month: "2-digit",
           day: "2-digit",
           year: "numeric",
@@ -164,7 +179,22 @@ function renderFameChart(data) {
     }]
   };
 
-  new Chart(ctx, {
+  
+new Chart(ctx, {
+  options: {
+    plugins: {
+      title: {
+        display: true,
+        text: '4-Week Participation Trend',
+        font: { size: 18 }
+      },
+      legend: { display: true, position: 'bottom' }
+    },
+    scales: {
+      y: { beginAtZero: true, title: { display: true, text: 'Score (%)' } },
+      x: { title: { display: true, text: 'Week #' } }
+    }
+  },
     type: 'pie',
     data: pieData,
     options: {
@@ -260,5 +290,64 @@ async function loadMapPins() {
     L.marker([member.lat, member.lng])
       .addTo(map)
       .bindPopup(`<b>${member.name}</b>`);
+  });
+}
+
+
+async function submitLocation() {
+  const name = document.getElementById("locName").value.trim();
+  const loc = document.getElementById("locCoords").value.trim();
+  const pin = document.getElementById("locPIN").value.trim();
+  const msg = document.getElementById("locMsg");
+
+  if (!name || !loc || !pin) {
+    msg.innerText = "⚠️ Fill out all fields.";
+    return;
+  }
+
+  const res = await fetch("/api/member-location", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ tag_or_name: name, location: loc, pin: pin })
+  });
+
+  const data = await res.json();
+  if (data.success) {
+    msg.innerText = "✅ Location added!";
+    loadMapPins();
+  } else {
+    msg.innerText = "❌ " + (data.error || "Unable to update.");
+  }
+}
+
+async function loadMapPins() {
+  const data = await fetchJSON("/api/member-locations");
+  const mapContainer = document.getElementById("mapContainer");
+  mapContainer.innerHTML = "";
+  const map = L.map(mapContainer).setView([39.8283, -98.5795], 4);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap",
+    maxZoom: 18,
+  }).addTo(map);
+
+  const heatData = [];
+
+  data.forEach(member => {
+    const latlng = [member.lat, member.lng];
+    heatData.push(latlng);
+    L.marker(latlng).addTo(map).bindPopup(`<b>${member.name}</b>`);
+  });
+
+  const heat = L.heatLayer(heatData, { radius: 25 }).addTo(map);
+
+  map.on("click", function(e) {
+    
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(pos => {
+    const coords = pos.coords.latitude.toFixed(4) + "," + pos.coords.longitude.toFixed(4);
+    document.getElementById("locCoords").value = coords;
+  });
+}
+document.getElementById("locCoords").value = `${e.latlng.lat.toFixed(4)},${e.latlng.lng.toFixed(4)}`;
   });
 }

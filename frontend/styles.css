@@ -222,3 +222,26 @@ input[type="checkbox"].excuse-toggle {
   overflow: hidden;
   z-index: 2;
 }
+
+
+.location-form {
+  background: rgba(0,0,0,0.6);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  color: white;
+}
+.location-form input {
+  margin: 0.3rem;
+  padding: 0.4rem;
+  border-radius: 6px;
+  border: none;
+}
+.location-form button {
+  padding: 0.4rem 1rem;
+  background: #ffd700;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}

@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 from backend.database import SessionLocal
 from backend.models import RiverRaceEntry
 from backend.fetcher import fetch_data
+from backend.models import RiverRaceHistory
 
 router = APIRouter()
 
