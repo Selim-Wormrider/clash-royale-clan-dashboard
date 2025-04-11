@@ -17,3 +17,4 @@ This is a full-stack, open-source dashboard to track and analyze Clash Royale cl
    ```bash
    cd backend
    uvicorn main:app --reload
+<pre> 📁 /opt/dashboard ├── backend/ │ ├── routes.py ← FastAPI endpoints │ ├── fetcher.py ← Clash Royale API logic │ ├── models.py ← SQLAlchemy DB models │ ├── database.py ← DB session & engine ├── frontend/ │ ├── index.html ← Main UI │ ├── styles.css ← Theme & layout │ ├── script.js ← Data + interactivity │ ├── images/ ← Rank badges, rain │ ├── fonts/ ← youBlockhead.ttf ├── main.py ← FastAPI entrypoint ├── start_dashboard.sh ← Production launch script ├── .env ← Environment variables </pre>
