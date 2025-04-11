@@ -182,3 +182,43 @@ input[type="checkbox"].excuse-toggle {
   background: #002244;
   color: #ffd700;
 }
+.excuse-toggle {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 38px;
+  height: 20px;
+  background: #666;
+  border-radius: 20px;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  vertical-align: middle;
+}
+.excuse-toggle:checked {
+  background: #f2c94c;
+}
+.excuse-toggle::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+}
+.excuse-toggle:checked::before {
+  transform: translateX(18px);
+}
+
+
+#mapContainer {
+  height: 400px;
+  width: 100%;
+  margin-top: 1rem;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 2;
+}

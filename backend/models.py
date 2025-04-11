@@ -36,6 +36,7 @@ class RiverRaceHistory(Base):
     role = Column(String)
     excused = Column(Boolean, default=False)
     war_end_time = Column(DateTime)
+    location = Column(String, default="")
     collected_at = Column(DateTime, default=datetime.datetime.utcnow)
 
 

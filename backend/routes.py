@@ -165,3 +165,26 @@ def suggest_promotions():
 
     db.close()
     return suggestions
+
+
+@router.get("/api/member-locations")
+def member_locations():
+    db = SessionLocal()
+    latest_week = datetime.datetime.utcnow().isocalendar()[1]
+    entries = (
+        db.query(RiverRaceHistory)
+        .filter(RiverRaceHistory.week == latest_week)
+        .all()
+    )
+    pins = []
+    for e in entries:
+        if e.location and "," in e.location:
+            parts = e.location.split(",")
+            try:
+                lat = float(parts[0].strip())
+                lng = float(parts[1].strip())
+                pins.append({ "name": e.name, "lat": lat, "lng": lng })
+            except:
+                continue
+    db.close()
+    return pins

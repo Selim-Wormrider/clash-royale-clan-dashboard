@@ -4,6 +4,7 @@ async function fetchJSON(endpoint) {
 }
 
 async function loadData() {
+  loadMapPins();
   await Promise.all([
     loadMembers(),
     loadRaceSummary()
@@ -243,3 +244,21 @@ function spawnCharacterRain() {
 }
 
 window.onload = loadData;
+
+
+async function loadMapPins() {
+  const data = await fetchJSON("/api/member-locations");
+  const mapContainer = document.getElementById("mapContainer");
+  mapContainer.innerHTML = "";
+  const map = L.map(mapContainer).setView([39.8283, -98.5795], 4);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "&copy; OpenStreetMap",
+    maxZoom: 18,
+  }).addTo(map);
+
+  data.forEach(member => {
+    L.marker([member.lat, member.lng])
+      .addTo(map)
+      .bindPopup(`<b>${member.name}</b>`);
+  });
+}
