@@ -7,7 +7,7 @@
 <p align="center">
   <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled.png" alt="app preview 1" width="280"/>
   <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled2.png" alt="app preview 2" width="280"/>
-  <img src="https://github.com/YOUR_USERNAME/YOUR_REPO/assets/preview3.png" alt="app preview 3" width="280"/>
+  <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled3.png" alt="app preview 3" width="280"/>
 </p>
 
 ---
