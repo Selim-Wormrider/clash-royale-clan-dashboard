@@ -40,7 +40,7 @@ Replace the image URLs with actual hosted versions or GitHub assets when uploadi
 ## 🤝 Contributing
 
 PRs welcome! Add issues or enhancements under GitHub Issues.  
-
+I would very much welcome any Clash Royale fans who are devs and can contribute to please do!  Right now it's me and Chat GPT.  Not exactly the A team, but hey, we've got this far!  
 ---
 
 ## 📜 License
