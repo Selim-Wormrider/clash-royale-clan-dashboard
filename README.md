@@ -3,11 +3,8 @@
 <p align="center">
   <em>Track, analyze, and manage your Clash Royale clan's war participation, trends, and leadership decisions — all in one place.</em>
 </p>
-
 <p align="center">
-  <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled.png" alt="app preview 1" width="280"/>
-  <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled2.png" alt="app preview 2" width="280"/>
-  <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled3.png" alt="app preview 3" width="280"/>
+  <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled.png" alt="app preview 1" width="560"/>
 </p>
 
 ---
@@ -33,7 +30,12 @@
 
 ## 📸 Screenshots
 
-Replace the image URLs with actual hosted versions or GitHub assets when uploading.
+<p align="center">
+  <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled.png" alt="app preview 1" width="280"/>
+  <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled2.png" alt="app preview 2" width="280"/>
+  <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled3.png" alt="app preview 3" width="280"/>
+</p>
+
 
 ---
 
