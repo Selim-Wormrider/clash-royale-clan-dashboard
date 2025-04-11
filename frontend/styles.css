@@ -1,10 +1,8 @@
-/* === Font Setup === */
 @font-face {
   font-family: 'youBlockhead';
   src: url('/static/fonts/youBlockhead.ttf') format('truetype');
 }
 
-/* === Base === */
 body {
   margin: 0;
   padding: 0;
@@ -26,7 +24,7 @@ body {
   z-index: 2;
 }
 
-/* === Typography === */
+/* Typography */
 h1, h2, .card-title {
   font-family: 'youBlockhead', sans-serif;
   text-shadow: 2px 2px #000;
@@ -44,28 +42,15 @@ h1, h2, .card-title {
 
 .card-value {
   color: #cbe4ff;
+  font-size: 0.95rem;
 }
 
-/* === Header === */
-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-header h1, header h2 {
-  margin: 0.5rem 0;
-}
-
-/* === Collapsibles === */
+/* Collapsibles */
 section {
   background: rgba(255, 255, 255, 0.08);
   margin-bottom: 1.5rem;
-  padding: 0.5rem 1rem;
   border-radius: 10px;
-  max-height: 400px;
-  overflow-y: auto;
-  scrollbar-color: #f2c94c rgba(255,255,255,0.05);
-  scrollbar-width: thin;
+  overflow: hidden;
 }
 
 .collapsible-header {
@@ -73,30 +58,33 @@ section {
   padding: 0.7rem 1rem;
   font-weight: bold;
   font-size: 1.1rem;
-  border-radius: 6px;
+  border-radius: 6px 6px 0 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   user-select: none;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .collapsible-content {
-  display: none;
-  margin-top: 0.8rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 1rem;
 }
 
-/* === Member Cards === */
+/* Card layout */
 .card {
   background: rgba(255, 255, 255, 0.12);
   border-radius: 8px;
   padding: 1rem;
   margin: 0.5rem 0;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
+  position: relative;
 }
 
-/* === Rank Badge Images === */
+/* Rank badge image */
 .role-badge-img {
   display: block;
   margin-top: 0.5rem;
@@ -112,7 +100,20 @@ section {
   font-weight: bold;
 }
 
-/* === Fame Bars === */
+/* Excuse toggle */
+.toggle-switch {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+}
+
+input[type="checkbox"].excuse-toggle {
+  width: 20px;
+  height: 20px;
+  accent-color: #ffd700;
+}
+
+/* Fame bar */
 .fame-bar-container {
   background: #444;
   height: 10px;
@@ -126,23 +127,7 @@ section {
   background: linear-gradient(to right, #f2c94c, #f2994a);
 }
 
-/* === Buttons === */
-button {
-  background: #f2c94c;
-  color: #000;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  margin-top: 0.5rem;
-}
-
-button:hover {
-  background: #f2994a;
-}
-
-/* === Scrollbar === */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -154,21 +139,7 @@ button:hover {
   background-color: rgba(255,255,255,0.05);
 }
 
-/* === Refresh Button Icon === */
-.refresh-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.3rem;
-  font-size: 1.3rem;
-  filter: brightness(1.3);
-  transition: transform 0.2s ease;
-}
-.refresh-btn:hover {
-  transform: rotate(90deg);
-}
-
-/* === Character Rain === */
+/* Character rain */
 .floating-layer {
   position: fixed;
   top: 0;
@@ -178,23 +149,36 @@ button:hover {
   pointer-events: none;
   z-index: 1;
 }
-
 .floating-layer img {
   position: absolute;
   width: 40px;
-  opacity: 0.25;
+  opacity: 0.35;
   animation-name: rainDown;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
 }
 
 @keyframes rainDown {
-  0% {
-    top: -80px;
-    transform: translateY(0);
-  }
-  100% {
-    top: 110vh;
-    transform: translateY(40px);
-  }
+  0% { top: -80px; transform: translateY(0); }
+  100% { top: 110vh; transform: translateY(40px); }
+}
+#fameChart {
+  max-width: 100%;
+  margin-top: 1rem;
+}
+.eligible-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+.eligible-table th,
+.eligible-table td {
+  border: 1px solid #444;
+  padding: 0.4rem 0.6rem;
+  text-align: center;
+}
+.eligible-table th {
+  background: #002244;
+  color: #ffd700;
 }

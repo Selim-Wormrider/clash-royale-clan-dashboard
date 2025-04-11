@@ -69,6 +69,12 @@ def toggle_excuse(tag: str, code: str = ""):
     if entry:
         entry.excused = not entry.excused
         db.commit()
+# Mirror to history if needed
+        hist = db.query(RiverRaceHistory).filter_by(tag=tag, week=entry.week).first()
+        if hist:
+            hist.excused = entry.excused
+            db.commit()
+
     db.close()
     return {"status": "toggled"}
 
@@ -92,3 +98,70 @@ def summary_by_week(offset: int):
         })
     db.close()
     return out
+@router.get("/api/eligibility-report")
+def eligibility_report():
+    db = SessionLocal()
+    week = datetime.datetime.utcnow().isocalendar()[1]
+    tags = db.query(RiverRaceHistory.tag).distinct().all()
+    latest = {}
+
+    for tag_tuple in tags:
+        tag = tag_tuple[0]
+        latest_entry = (
+            db.query(RiverRaceHistory)
+            .filter_by(tag=tag, week=week)
+            .order_by(RiverRaceHistory.id.desc())
+            .first()
+        )
+        if latest_entry:
+            latest[tag] = {
+                "tag": tag,
+                "name": latest_entry.name,
+                "role": latest_entry.role,
+                "promotion": latest_entry.eligiblePromotion,
+                "demotion": latest_entry.atRiskDemotion,
+                "excused": latest_entry.excused,
+                "weeksParticipated": latest_entry.weeksParticipated,
+                "weeksMissed": latest_entry.weeksMissed
+            }
+
+    db.close()
+    return list(latest.values())
+@router.get("/api/suggest-promotions")
+def suggest_promotions():
+    db = SessionLocal()
+    week = datetime.datetime.utcnow().isocalendar()[1]
+    entries = (
+        db.query(RiverRaceHistory)
+        .filter(RiverRaceHistory.week == week)
+        .all()
+    )
+
+    suggestions = []
+    for e in entries:
+        if e.excused:
+            continue
+        if e.eligiblePromotion and e.role not in ["coLeader", "leader"]:
+            suggestions.append({
+                "tag": e.tag,
+                "name": e.name,
+                "currentRole": e.role,
+                "suggestedRole": "elder" if e.role == "member" else "coLeader",
+                "reason": "100% war participation over 4 weeks"
+            })
+        elif e.atRiskDemotion:
+            lower = {
+                "elder": "member",
+                "coLeader": "elder"
+            }.get(e.role)
+            if lower:
+                suggestions.append({
+                    "tag": e.tag,
+                    "name": e.name,
+                    "currentRole": e.role,
+                    "suggestedRole": lower,
+                    "reason": f"Low war activity"
+                })
+
+    db.close()
+    return suggestions

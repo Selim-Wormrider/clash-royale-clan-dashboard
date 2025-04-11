@@ -37,3 +37,9 @@ class RiverRaceHistory(Base):
     excused = Column(Boolean, default=False)
     war_end_time = Column(DateTime)
     collected_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+
+    weeksParticipated = Column(Integer, default=0)
+    weeksMissed = Column(Integer, default=0)
+    eligiblePromotion = Column(Boolean, default=False)
+    atRiskDemotion = Column(Boolean, default=False)
