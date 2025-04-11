@@ -1,20 +1,48 @@
-# Bravo Six | Clash Royale Clan War Dashboard
+<h1 align="center">⚔️ Clash Royale Clan Dashboard</h1>
 
-This is a full-stack, open-source dashboard to track and analyze Clash Royale clan war participation, built with FastAPI, PostgreSQL, and vanilla JS.
+<p align="center">
+  <em>Track, analyze, and manage your Clash Royale clan's war participation, trends, and leadership decisions — all in one place.</em>
+</p>
 
-## 🌍 Features
-- River Race tracking with weekly logs
-- Current war + member data from Clash API
-- Promotion/demotion analysis logic (in progress)
-- Excused battle tracking for leadership
-- Responsive frontend with modern styling
+<p align="center">
+  <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled.png" alt="app preview 1" width="280"/>
+  <img src="https://mycelium.run/wp-content/uploads/2025/04/Untitled2.png" alt="app preview 2" width="280"/>
+  <img src="https://github.com/YOUR_USERNAME/YOUR_REPO/assets/preview3.png" alt="app preview 3" width="280"/>
+</p>
 
-## 🧪 Development
+---
 
-1. Clone the repo
-2. Create a `.env` from `.env.example`
-3. Run:
-   ```bash
-   cd backend
-   uvicorn main:app --reload
-<pre> 📁 /opt/dashboard ├── backend/ │ ├── routes.py ← FastAPI endpoints │ ├── fetcher.py ← Clash Royale API logic │ ├── models.py ← SQLAlchemy DB models │ ├── database.py ← DB session & engine ├── frontend/ │ ├── index.html ← Main UI │ ├── styles.css ← Theme & layout │ ├── script.js ← Data + interactivity │ ├── images/ ← Rank badges, rain │ ├── fonts/ ← youBlockhead.ttf ├── main.py ← FastAPI entrypoint ├── start_dashboard.sh ← Production launch script ├── .env ← Environment variables </pre>
+## 🔍 Features
+
+- 📊 4-week war participation tracking
+- 🧠 Automated promotion/demotion suggestions
+- 🎯 Live clan war data with caching
+- 🗺️ Interactive member location map
+- 📈 Stats, trends, pie charts, and MVP detection
+
+---
+
+## 🚀 Getting Started
+
+1. Clone the repo  
+2. Install dependencies (`pip install -r requirements.txt`)  
+3. Configure your `.env`  
+4. Run the app with `uvicorn backend.main:app --reload`  
+
+---
+
+## 📸 Screenshots
+
+Replace the image URLs with actual hosted versions or GitHub assets when uploading.
+
+---
+
+## 🤝 Contributing
+
+PRs welcome! Add issues or enhancements under GitHub Issues.  
+
+---
+
+## 📜 License
+
+MIT © 2025 — Selim Wormrider  
