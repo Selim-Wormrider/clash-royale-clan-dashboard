@@ -58,3 +58,37 @@ async def get_current_riverrace_compact():
         return compact
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
+
+
+@router.post("/api/toggle-excuse/{tag}")
+def toggle_excuse(tag: str, code: str = ""):
+    if code != "2042":
+        return JSONResponse(content={"error": "unauthorized"}, status_code=401)
+    db = SessionLocal()
+    entry = db.query(RiverRaceEntry).filter_by(tag=tag).order_by(RiverRaceEntry.id.desc()).first()
+    if entry:
+        entry.excused = not entry.excused
+        db.commit()
+    db.close()
+    return {"status": "toggled"}
+
+
+@router.get("/api/summary/week/{offset}")
+def summary_by_week(offset: int):
+    db = SessionLocal()
+    current_week = datetime.datetime.utcnow().isocalendar()[1]
+    week = current_week - offset
+    entries = db.query(RiverRaceHistory).filter(RiverRaceHistory.week == week).all()
+    out = []
+    for e in entries:
+        out.append({
+            "name": e.name,
+            "tag": e.tag,
+            "role": e.role,
+            "fame": e.fame,
+            "decks_used": e.decks_used,
+            "decks_possible": e.decks_possible,
+            "excused": e.excused
+        })
+    db.close()
+    return out

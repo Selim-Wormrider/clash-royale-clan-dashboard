@@ -1,4 +1,10 @@
-/* === Base Layout & Theme === */
+/* === Font Setup === */
+@font-face {
+  font-family: 'youBlockhead';
+  src: url('/static/fonts/youBlockhead.ttf') format('truetype');
+}
+
+/* === Base === */
 body {
   margin: 0;
   padding: 0;
@@ -11,7 +17,7 @@ body {
 
 .container {
   max-width: 960px;
-  margin: auto;
+  margin: 2rem auto;
   padding: 2rem;
   background-color: rgba(0, 63, 145, 0.95);
   border-radius: 12px;
@@ -20,26 +26,37 @@ body {
   z-index: 2;
 }
 
+/* === Typography === */
+h1, h2, .card-title {
+  font-family: 'youBlockhead', sans-serif;
+  text-shadow: 2px 2px #000;
+}
+
+.gold-title {
+  font-size: 3rem;
+  color: #ffd700;
+}
+
+.white-subtitle {
+  font-size: 1.6rem;
+  color: #fff;
+}
+
+.card-value {
+  color: #cbe4ff;
+}
+
 /* === Header === */
 header {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-header h1 {
-  font-size: 3rem;
-  margin: 0;
-  color: #ffd700;
-  text-shadow: 2px 2px 4px #000;
+header h1, header h2 {
+  margin: 0.5rem 0;
 }
 
-header h2 {
-  font-size: 1.2rem;
-  color: #a0c4ff;
-  margin-top: 0.5rem;
-}
-
-/* === Collapsible Sections === */
+/* === Collapsibles === */
 section {
   background: rgba(255, 255, 255, 0.08);
   margin-bottom: 1.5rem;
@@ -53,13 +70,14 @@ section {
 
 .collapsible-header {
   background: rgba(0, 0, 0, 0.3);
-  padding: 0.7rem;
+  padding: 0.7rem 1rem;
   font-weight: bold;
   font-size: 1.1rem;
   border-radius: 6px;
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  user-select: none;
 }
 
 .collapsible-content {
@@ -67,7 +85,7 @@ section {
   margin-top: 0.8rem;
 }
 
-/* === Card Layout === */
+/* === Member Cards === */
 .card {
   background: rgba(255, 255, 255, 0.12);
   border-radius: 8px;
@@ -75,29 +93,26 @@ section {
   margin: 0.5rem 0;
   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
   flex-direction: column;
 }
 
-.card-title {
-  font-weight: bold;
-  color: #ffd700;
-  font-size: 1.1rem;
+/* === Rank Badge Images === */
+.role-badge-img {
+  display: block;
+  margin-top: 0.5rem;
+  height: 36px;
+  width: auto;
 }
 
-.card-value {
-  font-size: 0.9rem;
-  color: #a0c4ff;
-}
-
-.card-details {
-  font-size: 0.8rem;
+.rank-label {
+  font-size: 0.75rem;
   color: #ccc;
-  margin-top: 0.3rem;
-  line-height: 1.4;
+  text-align: center;
+  margin-top: 0.25rem;
+  font-weight: bold;
 }
 
+/* === Fame Bars === */
 .fame-bar-container {
   background: #444;
   height: 10px;
@@ -105,21 +120,10 @@ section {
   margin-top: 4px;
   overflow: hidden;
 }
+
 .fame-bar {
   height: 100%;
   background: linear-gradient(to right, #f2c94c, #f2994a);
-}
-
-/* === Role Badge === */
-.role-badge {
-  background: #ffd700;
-  color: #000;
-  font-size: 0.75rem;
-  padding: 0.3rem 0.6rem;
-  border-radius: 6px;
-  text-transform: uppercase;
-  font-weight: bold;
-  display: inline-block;
 }
 
 /* === Buttons === */
@@ -131,12 +135,40 @@ button {
   border-radius: 8px;
   border: none;
   cursor: pointer;
+  margin-top: 0.5rem;
 }
+
 button:hover {
   background: #f2994a;
 }
 
-/* === Floating Characters Layer === */
+/* === Scrollbar === */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ffd700;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  background-color: rgba(255,255,255,0.05);
+}
+
+/* === Refresh Button Icon === */
+.refresh-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  font-size: 1.3rem;
+  filter: brightness(1.3);
+  transition: transform 0.2s ease;
+}
+.refresh-btn:hover {
+  transform: rotate(90deg);
+}
+
+/* === Character Rain === */
 .floating-layer {
   position: fixed;
   top: 0;
@@ -150,7 +182,7 @@ button:hover {
 .floating-layer img {
   position: absolute;
   width: 40px;
-  opacity: 0.15;
+  opacity: 0.25;
   animation-name: rainDown;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
@@ -165,16 +197,4 @@ button:hover {
     top: 110vh;
     transform: translateY(40px);
   }
-}
-
-/* === Scrollbar Customization === */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #ffd700;
-  border-radius: 6px;
-}
-::-webkit-scrollbar-track {
-  background-color: rgba(255,255,255,0.05);
 }

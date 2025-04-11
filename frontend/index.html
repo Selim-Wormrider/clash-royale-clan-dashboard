@@ -15,28 +15,28 @@
   <!-- Main Container -->
   <div class="container">
     <header>
-      <h1>Bravo Six</h1>
-      <h2>Clash Royale Clan War Dashboard</h2>
+      <img src="/static/images/bravoSixBadge.png" alt="Bravo Six" style="height:64px; margin-bottom:1rem;" />
+      <h1 class="gold-title">Bravo Six</h1>
+      <h2 class="white-subtitle">Clash Royale Clan War Dashboard</h2>
     </header>
 
     <!-- River Race Summary -->
     <section>
       <div class="collapsible-header" onclick="toggleSection('raceSummary')">
-        🏆 River Race Summary <span>🔽</span>
+        <span>🏆 River Race Summary</span>
+        <span id="lastUpdated" style="font-size:0.8rem; margin-left: 1rem;">Updated: ...</span>
       </div>
       <div class="collapsible-content" id="raceSummary">
         <div id="raceCompact"></div>
         <div id="topParticipants"></div>
         <div id="logsTimeline"></div>
-        <button onclick="triggerRefresh()">🔄 Refresh</button>
-        <div id="lastUpdated">Last updated: ...</div>
       </div>
     </section>
 
     <!-- Clan Member Stats -->
     <section>
       <div class="collapsible-header" onclick="toggleSection('memberSection')">
-        👥 Clan Members <span>🔽</span>
+        👥 Clan Members
       </div>
       <div class="collapsible-content" id="memberSection">
         <div id="memberContainer">Loading members...</div>
@@ -46,11 +46,23 @@
     <!-- Charts & History -->
     <section>
       <div class="collapsible-header" onclick="toggleSection('chartsSection')">
-        📊 Stats & Trends <span>🔽</span>
+        📊 Stats & Trends
       </div>
       <div class="collapsible-content" id="chartsSection">
         <canvas id="fameChart" width="400" height="200"></canvas>
         <div id="historyTable"></div>
+      </div>
+    </section>
+
+    <!-- Map Container -->
+    <section>
+      <div class="collapsible-header" onclick="toggleSection('mapSection')">
+        🗺 Member Map
+      </div>
+      <div class="collapsible-content" id="mapSection">
+        <div id="mapContainer" style="height: 300px; width: 100%; background: #111; color: #ccc; display: flex; align-items: center; justify-content: center;">
+          🧭 US Map Placeholder — Member pins coming soon...
+        </div>
       </div>
     </section>
   </div>
